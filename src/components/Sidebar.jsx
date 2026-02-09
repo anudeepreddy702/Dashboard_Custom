@@ -68,8 +68,24 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
+import { useLocation, useNavigate } from 'react-router-dom';
+
 export default function Sidebar({ open, handleDrawerClose }) {
     const theme = useTheme();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const menuItems = [
+        { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+        { text: 'Staff', icon: <PeopleIcon />, path: '/staff' },
+        { text: 'Analytics', icon: <BarChartIcon />, path: '/analytics' },
+        { text: 'Integrations', icon: <LayersIcon />, path: '/integrations' },
+    ];
+
+    const secondaryItems = [
+        { text: 'Messages', icon: <MailIcon />, path: '/messages' },
+        { text: 'Settings', icon: <InboxIcon />, path: '/settings' }, // specific icon for Settings?
+    ];
 
     return (
         <Drawer variant="permanent" open={open}>
@@ -80,13 +96,29 @@ export default function Sidebar({ open, handleDrawerClose }) {
             </DrawerHeader>
             <Divider />
             <List>
-                {['Dashboard', 'Staff', 'Analytics', 'Integrations'].map((text, index) => (
-                    <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                {menuItems.map((item) => (
+                    <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
+                            onClick={() => navigate(item.path)}
+                            selected={location.pathname === item.path}
                             sx={{
                                 minHeight: 48,
                                 justifyContent: open ? 'initial' : 'center',
                                 px: 2.5,
+                                '&.Mui-selected': {
+                                    backgroundColor: 'primary.light',
+                                    borderRight: `4px solid ${theme.palette.primary.main}`,
+                                    '&:hover': {
+                                        backgroundColor: 'primary.light',
+                                    },
+                                    '& .MuiListItemIcon-root': {
+                                        color: 'primary.main',
+                                    },
+                                    '& .MuiListItemText-primary': {
+                                        fontWeight: 'bold',
+                                        color: 'primary.main',
+                                    },
+                                },
                             }}
                         >
                             <ListItemIcon
@@ -94,24 +126,32 @@ export default function Sidebar({ open, handleDrawerClose }) {
                                     minWidth: 0,
                                     mr: open ? 3 : 'auto',
                                     justifyContent: 'center',
-                                    color: 'primary.main', // Use premium orange
+                                    color: location.pathname === item.path ? 'primary.main' : 'text.secondary',
                                 }}
                             >
-                                {index === 0 && <DashboardIcon />}
-                                {index === 1 && <PeopleIcon />}
-                                {index === 2 && <BarChartIcon />}
-                                {index === 3 && <LayersIcon />}
+                                {item.icon}
                             </ListItemIcon>
-                            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText
+                                primary={item.text}
+                                sx={{
+                                    opacity: open ? 1 : 0,
+                                    '& .MuiTypography-root': {
+                                        fontWeight: location.pathname === item.path ? 700 : 500,
+                                        fontSize: '1rem',
+                                    }
+                                }}
+                            />
                         </ListItemButton>
                     </ListItem>
                 ))}
             </List>
             <Divider />
             <List>
-                {['Messages', 'Settings'].map((text, index) => (
-                    <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                {secondaryItems.map((item) => (
+                    <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
+                            onClick={() => navigate(item.path)}
+                            selected={location.pathname === item.path}
                             sx={{
                                 minHeight: 48,
                                 justifyContent: open ? 'initial' : 'center',
@@ -123,13 +163,20 @@ export default function Sidebar({ open, handleDrawerClose }) {
                                     minWidth: 0,
                                     mr: open ? 3 : 'auto',
                                     justifyContent: 'center',
-                                    color: 'primary.main',
+                                    color: 'text.secondary',
                                 }}
                             >
-                                {index === 0 && <MailIcon />}
-                                {index === 1 && <InboxIcon />}
+                                {item.icon}
                             </ListItemIcon>
-                            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText
+                                primary={item.text}
+                                sx={{
+                                    opacity: open ? 1 : 0,
+                                    '& .MuiTypography-root': {
+                                        fontWeight: 500,
+                                    }
+                                }}
+                            />
                         </ListItemButton>
                     </ListItem>
                 ))}

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import StatCard from '../components/StatCard';
 import RecentActivity from '../components/RecentActivity';
 import NotificationsPanel from '../components/NotificationsPanel';
+import NewsFeed from '../components/NewsFeed';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -35,11 +36,14 @@ export default function Dashboard() {
 
             {/* Middle Section: Recent Activity & Notifications */}
             <Grid container spacing={3}>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} lg={8}>
                     <RecentActivity />
                 </Grid>
-                <Grid item xs={12} md={4}>
-                    <NotificationsPanel />
+                <Grid item xs={12} lg={4}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                        <NotificationsPanel />
+                        <NewsFeed />
+                    </Box>
                 </Grid>
             </Grid>
         </Box>
