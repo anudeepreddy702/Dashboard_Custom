@@ -14,28 +14,26 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import StatusBadge from './StatusBadge';
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isMobile',
-})(({ theme, open, isMobile }) => ({
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: 'rgba(7, 11, 20, 0.92)',
-    backdropFilter: 'blur(16px)',
+    backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
-    ...(open && !isMobile && {
+    ...(open && {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
@@ -47,8 +45,8 @@ const AppBar = styled(MuiAppBar, {
 
 export default function Header({ open, handleDrawerOpen, toggleColorMode, userStatus, setUserStatus }) {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    // User Menu State
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openMenu = Boolean(anchorEl);
 
@@ -60,49 +58,47 @@ export default function Header({ open, handleDrawerOpen, toggleColorMode, userSt
     };
 
     const handleStatusChange = () => {
-        setUserStatus((prev) => (prev === 'available' ? 'away' : 'available'));
+        setUserStatus(prev => prev === 'available' ? 'away' : 'available');
     };
 
     return (
-        <AppBar position="fixed" open={open} isMobile={isMobile}>
-            <Toolbar sx={{ gap: 1, flexWrap: 'wrap' }}>
+        <AppBar position="fixed" open={open}>
+            <Toolbar>
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
                     onClick={handleDrawerOpen}
                     edge="start"
-                    sx={{ marginRight: 1, ...(open && { display: 'none' }) }}
+                    sx={{
+                        marginRight: 5,
+                        ...(open && { display: 'none' }),
+                    }}
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'primary.main' }}>
                     Dashboard
                 </Typography>
 
-                <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 2, flexGrow: 1, minWidth: 180 }}>
-                    <TextField
-                        size="small"
-                        placeholder="Search reports"
-                        variant="outlined"
-                        InputProps={{ sx: { height: 40, borderRadius: 2 } }}
-                        sx={{ width: { sm: 180, md: 260 } }}
-                    />
-                </Box>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    {/* Theme Toggle */}
                     <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
                         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>
+
+                    {/* Notifications */}
                     <IconButton color="inherit">
                         <Badge badgeContent={4} color="primary">
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
+
+                    {/* Profile & Status */}
                     <Tooltip title="Account settings">
                         <IconButton
                             onClick={handleClick}
                             size="small"
-                            sx={{ ml: 1 }}
+                            sx={{ ml: 2 }}
                             aria-controls={openMenu ? 'account-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={openMenu ? 'true' : undefined}
@@ -113,12 +109,13 @@ export default function Header({ open, handleDrawerOpen, toggleColorMode, userSt
                                 variant="dot"
                                 status={userStatus}
                             >
-                                <Avatar sx={{ width: 34, height: 34, bgcolor: 'primary.main' }}>A</Avatar>
+                                <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>A</Avatar>
                             </StatusBadge>
                         </IconButton>
                     </Tooltip>
                 </Box>
 
+                {/* User Dropdown Menu */}
                 <Menu
                     anchorEl={anchorEl}
                     id="account-menu"
@@ -177,6 +174,7 @@ export default function Header({ open, handleDrawerOpen, toggleColorMode, userSt
                         Logout
                     </MenuItem>
                 </Menu>
+
             </Toolbar>
         </AppBar>
     );

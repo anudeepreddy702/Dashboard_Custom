@@ -7,13 +7,13 @@ import Icon from '@mui/material/Icon';
 
 export default function StatCard({ title, value, icon, color }) {
     return (
-        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: 3, boxShadow: 3, backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', borderRadius: 3, boxShadow: 3 }}>
             <CardContent sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', p: 3 }}>
-                <Box sx={{ mr: 2, display: 'flex', p: 1.5, borderRadius: '50%', bgcolor: `${color}20`, color: color, minWidth: 40, justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ mr: 2, display: 'flex', p: 1.5, borderRadius: '50%', bgcolor: `${color}20`, color: color }}>
                     {icon}
                 </Box>
                 <Box>
-                    <Typography variant="subtitle2" color="text.secondary" gutterBottom sx={{ textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    <Typography variant="subtitle2" color="text.secondary" gutterBottom>
                         {title}
                     </Typography>
                     <Typography variant="h4" component="div" fontWeight="bold">

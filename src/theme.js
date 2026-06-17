@@ -4,55 +4,55 @@ const getDesignTokens = (mode) => ({
   palette: {
     mode,
     primary: {
-      main: '#FF6D00', // Premium Orange
-      contrastText: '#fff',
+      main: '#FF6D00',
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: '#f50057',
+      main: '#6D8CF4',
     },
     background: {
-      default: mode === 'dark' ? '#121212' : '#f5f5f5',
-      paper: mode === 'dark' ? '#1e1e1e' : '#ffffff',
+      default: '#05080D',
+      paper: '#0C1220',
     },
     text: {
-      primary: mode === 'dark' ? '#ffffff' : '#121212',
-      secondary: mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
+      primary: '#F8FAFC',
+      secondary: 'rgba(248, 250, 252, 0.72)',
     },
   },
   typography: {
     fontFamily: [
       'Inter',
+      'Space Grotesk',
       '-apple-system',
       'BlinkMacSystemFont',
-      '"Segoe UI"',
+      'Segoe UI',
       'Roboto',
-      '"Helvetica Neue"',
       'Arial',
       'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    h1: { fontWeight: 600 },
-    h2: { fontWeight: 600 },
-    h3: { fontWeight: 600 },
-    h4: { fontWeight: 600 },
-    h5: { fontWeight: 600 },
-    h6: { fontWeight: 600 },
-    button: { textTransform: 'none', fontWeight: 600 },
+    ].join(', '),
+    h1: { fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1.05 },
+    h2: { fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.1 },
+    h3: { fontWeight: 700, lineHeight: 1.2 },
+    h4: { fontWeight: 700 },
+    h5: { fontWeight: 700 },
+    h6: { fontWeight: 700 },
+    button: { textTransform: 'none', fontWeight: 700 },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 999,
         },
       },
     },
     MuiPaper: {
       styleOverrides: {
         root: {
-          backgroundImage: 'none', // Remove default gradient in dark mode for a cleaner look
+          backgroundImage: 'none',
+          backgroundColor: '#0C1220',
+          border: '1px solid rgba(255,255,255,0.08)',
+          backdropFilter: 'blur(16px)',
         },
       },
     },
@@ -60,7 +60,18 @@ const getDesignTokens = (mode) => ({
       styleOverrides: {
         root: {
           boxShadow: 'none',
-          borderBottom: mode === 'dark' ? '1px solid rgba(255, 255, 255, 0.12)' : '1px solid rgba(0, 0, 0, 0.12)',
+          backgroundColor: 'rgba(7, 11, 20, 0.92)',
+          backdropFilter: 'blur(16px)',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#0D172A',
+          border: '1px solid rgba(255,255,255,0.06)',
+          borderRadius: 24,
         },
       },
     },

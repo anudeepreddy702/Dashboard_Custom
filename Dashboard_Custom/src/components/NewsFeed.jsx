@@ -38,26 +38,18 @@ const newsItems = [
 ];
 
 export default function NewsFeed() {
-    const [showAll, setShowAll] = React.useState(false);
-    const visibleItems = showAll ? newsItems : newsItems.slice(0, 2);
-
     return (
         <Paper elevation={0} sx={{ p: 3, height: '100%', borderRadius: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6" fontWeight="bold">
                     Latest News
                 </Typography>
-                <Button
-                    size="small"
-                    endIcon={<ArrowForwardIcon />}
-                    onClick={() => setShowAll((prev) => !prev)}
-                    sx={{ textTransform: 'none' }}
-                >
-                    {showAll ? 'Show Less' : 'View All'}
+                <Button size="small" endIcon={<ArrowForwardIcon />} sx={{ textTransform: 'none' }}>
+                    View All
                 </Button>
             </Box>
             <List disablePadding>
-                {visibleItems.map((item, index) => (
+                {newsItems.map((item, index) => (
                     <React.Fragment key={item.id}>
                         <ListItem alignItems="flex-start" sx={{ px: 0, py: 2 }}>
                             <ListItemText
@@ -92,7 +84,7 @@ export default function NewsFeed() {
                                 }
                             />
                         </ListItem>
-                        {index < visibleItems.length - 1 && <Divider component="li" />}
+                        {index < newsItems.length - 1 && <Divider component="li" />}
                     </React.Fragment>
                 ))}
             </List>

@@ -12,12 +12,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 const drawerWidth = 240;
 
@@ -59,28 +59,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         boxSizing: 'border-box',
         ...(open && {
             ...openedMixin(theme),
-            '& .MuiDrawer-paper': {
-                ...openedMixin(theme),
-                backgroundColor: '#071019',
-                borderRight: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 24px 80px rgba(0,0,0,0.18)',
-            },
+            '& .MuiDrawer-paper': openedMixin(theme),
         }),
         ...(!open && {
             ...closedMixin(theme),
-            '& .MuiDrawer-paper': {
-                ...closedMixin(theme),
-                backgroundColor: '#071019',
-                borderRight: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 24px 80px rgba(0,0,0,0.18)',
-            },
+            '& .MuiDrawer-paper': closedMixin(theme),
         }),
     }),
 );
 
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function Sidebar({ open, handleDrawerClose, isMobile }) {
+export default function Sidebar({ open, handleDrawerClose }) {
     const theme = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
@@ -94,18 +84,11 @@ export default function Sidebar({ open, handleDrawerClose, isMobile }) {
 
     const secondaryItems = [
         { text: 'Messages', icon: <MailIcon />, path: '/messages' },
-        { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+        { text: 'Settings', icon: <InboxIcon />, path: '/settings' }, // specific icon for Settings?
     ];
 
-    const drawerVariant = isMobile ? 'temporary' : 'permanent';
-
     return (
-        <Drawer
-            variant={drawerVariant}
-            open={open}
-            onClose={handleDrawerClose}
-            ModalProps={{ keepMounted: true }}
-        >
+        <Drawer variant="permanent" open={open}>
             <DrawerHeader>
                 <IconButton onClick={handleDrawerClose}>
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -116,10 +99,7 @@ export default function Sidebar({ open, handleDrawerClose, isMobile }) {
                 {menuItems.map((item) => (
                     <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
-                            onClick={() => {
-                                navigate(item.path);
-                                if (isMobile) handleDrawerClose();
-                            }}
+                            onClick={() => navigate(item.path)}
                             selected={location.pathname === item.path}
                             sx={{
                                 minHeight: 48,
@@ -170,10 +150,7 @@ export default function Sidebar({ open, handleDrawerClose, isMobile }) {
                 {secondaryItems.map((item) => (
                     <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
-                            onClick={() => {
-                                navigate(item.path);
-                                if (isMobile) handleDrawerClose();
-                            }}
+                            onClick={() => navigate(item.path)}
                             selected={location.pathname === item.path}
                             sx={{
                                 minHeight: 48,

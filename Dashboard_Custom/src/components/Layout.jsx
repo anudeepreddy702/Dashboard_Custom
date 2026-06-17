@@ -43,8 +43,8 @@ export default function Layout({ children, toggleColorMode }) {
                 userStatus={userStatus}
                 setUserStatus={setUserStatus}
             />
-            <Sidebar open={open} handleDrawerClose={handleDrawerClose} isMobile={isMobile} />
-            <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, sm: 3 }, minHeight: '100vh' }}>
+            <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
+            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 {children}
             </Box>
